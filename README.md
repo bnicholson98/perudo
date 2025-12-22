@@ -72,10 +72,29 @@ This project is being developed for personal learning purposes.
 ### Project Structure
 ```
 perudo/
-├── README.md
+├── main.py            # Entry point
+├── README.md          # Project documentation
 ├── Claude.md          # Agent-specific development notes
 ├── requirements.txt   # Python dependencies
-└── src/              # Source code (to be implemented)
+├── src/               # Source code
+│   ├── __init__.py
+│   ├── game.py        # Main game orchestration
+│   ├── player.py      # Player management
+│   ├── dice.py        # Dice handling
+│   ├── bid.py         # Bid validation
+│   ├── ui.py          # Terminal interface
+│   └── rules.py       # Game rules engine
+└── tests/             # Unit tests
+    ├── __init__.py
+    ├── test_bid.py
+    ├── test_player.py
+    └── test_rules.py
+```
+
+### Running the Game
+
+```bash
+python main.py
 ```
 
 ## License

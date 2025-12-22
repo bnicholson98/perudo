@@ -1,1 +1,2 @@
 # Python dependencies for Perudo
+# This game uses only Python standard library - no external dependencies required
