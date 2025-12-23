@@ -85,6 +85,14 @@ class PerudoGame:
             idx = (idx + 1) % len(self.players)
         return idx
 
+    def get_total_dice(self) -> int:
+        """Get total number of dice in play.
+
+        Returns:
+            Total dice count across all active players
+        """
+        return sum(p.dice.count for p in self.players if p.is_active)
+
     def play_turn(self) -> bool:
         """Play one turn.
 
@@ -125,11 +133,14 @@ class PerudoGame:
             if bid is None:
                 continue
 
-            is_valid, error = bid.is_valid_raise(self.current_bid, self.is_palifico)
+            total_dice = self.get_total_dice()
+            is_valid, error = bid.is_valid_raise(self.current_bid, self.is_palifico, total_dice)
             if is_valid:
                 self.current_bid = bid
                 self.last_bidder_idx = self.current_player_idx
                 self.ui.show_message(f"{self.players[self.current_player_idx].name} bids: {bid}")
+                input("Press Enter to continue...")
+                self.ui.clear_screen()
                 self.current_player_idx = self.get_next_active_player(self.current_player_idx)
                 return True
             else:

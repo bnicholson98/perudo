@@ -24,20 +24,27 @@ class Bid:
         """Developer representation of the bid."""
         return f"Bid({self.quantity}, {self.face})"
 
-    def is_valid_raise(self, previous_bid: Optional['Bid'], is_palifico: bool = False) -> tuple[bool, str]:
+    def is_valid_raise(self, previous_bid: Optional['Bid'], is_palifico: bool = False, total_dice: int = 0) -> tuple[bool, str]:
         """Check if this bid is a valid raise from the previous bid.
 
         Args:
             previous_bid: The previous bid to compare against (None if first bid)
             is_palifico: Whether the current round is Palifico
+            total_dice: Total number of dice in play (for max validation)
 
         Returns:
             Tuple of (is_valid, error_message)
         """
+        # Check max quantity
+        if total_dice > 0 and self.quantity > total_dice:
+            return False, f"Cannot bid more than {total_dice} dice (total in play)"
+
         # First bid of the round
         if previous_bid is None:
             if self.quantity < 1 or self.face < 1 or self.face > 6:
                 return False, "Invalid bid values"
+            if self.face == 1:
+                return False, "Cannot start the round with a bid on ones"
             return True, ""
 
         # During Palifico, face value must stay the same
