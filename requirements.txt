@@ -1,5 +1,7 @@
 # Python dependencies for Perudo
-# This game uses only Python standard library - no external dependencies required
+
+# Runtime dependencies
+rich>=13.0.0
 
 # Development dependencies
 pytest>=7.0.0
